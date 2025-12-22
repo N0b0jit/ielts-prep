@@ -1,8 +1,8 @@
-# 🛸 Antigravity IELTS: Elite AI-Powered Preparation Platform
+#  IELTS: Elite AI-Powered Preparation Platform
 
 ![Dashboard Mockup](https://raw.githubusercontent.com/username/project/main/public/banner.png)
 
-Antigravity IELTS is a professional, high-fidelity IELTS preparation ecosystem designed to provide laboratory-grade feedback using Advanced Generative AI (Gemini 1.5 Flash). It transforms standard prep into an interactive, data-driven experience.
+ IELTS is a professional, high-fidelity IELTS preparation ecosystem designed to provide laboratory-grade feedback using Advanced Generative AI (Gemini 1.5 Flash). It transforms standard prep into an interactive, data-driven experience.
 
 ## 🌟 Key Features
 
