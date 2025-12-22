@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛸 Antigravity IELTS: Elite AI-Powered Preparation Platform
 
-## Getting Started
+![Dashboard Mockup](https://raw.githubusercontent.com/username/project/main/public/banner.png)
 
-First, run the development server:
+Antigravity IELTS is a professional, high-fidelity IELTS preparation ecosystem designed to provide laboratory-grade feedback using Advanced Generative AI (Gemini 1.5 Flash). It transforms standard prep into an interactive, data-driven experience.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌟 Key Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### ✍️ AI Writing Lab (Task 1 & 2)
+- **Live Band 9 Checklist**: Real-time evaluation against official IELTS criteria (Cohesion, Lexical, Grammar).
+- **Style Transformer**: Instantly upgrade your writing to "Academic" or "Formal" tones.
+- **Quick Grammar Repair**: One-click AI fixing of common grammatical slips.
+- **Lexical Booster**: Context-aware synonym suggestions to boost lexical resource scores.
+- **Expert Comparison**: Side-by-side comparison with Band 9.0 sample answers.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🎙️ AI Speaking Coach
+- **Virtual AI Interviewer**: Simulation of the Speaking Part 1 & 2 interview.
+- **Pronunciation Heatmap**: Visual word-level accuracy tracking (Green for Perfect, Red for Review).
+- **Filler Word Detector**: Automated identification of hesitations ("um", "uh", "you know").
+- **Mirror Match (Shadowing)**: Imitate native speaker samples with real-time stress/intonation scoring.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📖 Adaptive Simulator
+- **Velocity Mode Reading**: A speed-training highlighter that scrolls at a guided 250 WPM pace.
+- **Diagnostic Test**: 15-minute high-pressure assessment to determine your starting band.
+- **Custom Exam Generator**: Upload any PDF to generate a tailored IELTS exam (Task 2 prompts, Reading passages).
 
-## Learn More
+### 📊 Mission Control Dashboard
+- **Elite Performance Radar**: Spider-chart visualization of your 5 core IELTS skill areas.
+- **Global Activity Pulse**: Real-time simulated feed of community achievements.
+- **Mission Bar**: Daily tasks and streaks to keep you motivated.
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠 Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS + Framer Motion (Premium Animations)
+- **Icons**: Lucide React
+- **AI Engine**: Gemini 1.5 Flash (via Google Generative AI Node SDK)
+- **Database**: Supabase (Planned Integration)
+- **State Management**: React Hooks
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 Getting Started
 
-## Deploy on Vercel
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/antigravity-ielts.git
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Set up Environment Variables**:
+   Create a `.env.local` file:
+   ```env
+   NEXT_PUBLIC_GEMINI_API_KEY=your_api_key_here
+   ```
+
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+
+## 📜 License
+
+Licensed under the MIT License. 100% Free Forever.
+
+---
+*Built with ❤️ for students worldwide.*
