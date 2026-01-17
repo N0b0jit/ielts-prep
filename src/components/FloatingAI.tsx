@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { MessageSquare, X, Send, Sparkles, Bot, Minimize2, Maximize2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { chatWithAI } from "@/lib/gemini";
 
 export function FloatingAI() {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,16 +13,31 @@ export function FloatingAI() {
         { role: "bot", content: "Hi! I'm your AI Invigilator. How can I help you with your IELTS prep today?" }
     ]);
 
-    const handleSend = () => {
-        if (!message.trim()) return;
-        const newChat = [...chat, { role: "user", content: message }];
-        setChat(newChat);
-        setMessage("");
+    const [isTyping, setIsTyping] = useState(false);
 
-        // Simulate AI Response
-        setTimeout(() => {
-            setChat([...newChat, { role: "bot", content: "That's a great question! For IELTS Reading, remember that the answers usually follow the order of the text. Would you like me to explain a specific strategy?" }]);
-        }, 1000);
+    const handleSend = async () => {
+        if (!message.trim()) return;
+
+        const apiKey = localStorage.getItem("gemini_api_key");
+        if (!apiKey) {
+            setChat(prev => [...prev, { role: "user", content: message }, { role: "bot", content: "Please set your Gemini API key in the settings (gear icon) to chat with me!" }]);
+            setMessage("");
+            return;
+        }
+
+        const newHistory = [...chat, { role: "user", content: message }];
+        setChat(newHistory);
+        setMessage("");
+        setIsTyping(true);
+
+        try {
+            const response = await chatWithAI(apiKey, newHistory, message);
+            setChat([...newHistory, { role: "bot", content: response }]);
+        } catch (error) {
+            setChat([...newHistory, { role: "bot", content: "Sorry, I encountered an error. Please check your connection or API key." }]);
+        } finally {
+            setIsTyping(false);
+        }
     };
 
     return (
@@ -66,6 +82,15 @@ export function FloatingAI() {
                                             </div>
                                         </div>
                                     ))}
+                                    {isTyping && (
+                                        <div className="flex justify-start">
+                                            <div className="bg-white dark:bg-slate-800 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 flex gap-1">
+                                                <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" />
+                                                <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce [animation-delay:0.2s]" />
+                                                <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce [animation-delay:0.4s]" />
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Input Area */}

@@ -7,6 +7,12 @@ import {
     TrendingUp, Target, CheckCircle2, ShieldCheck, PenTool as PenIcon
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+    analyzeEssayAI,
+    generateBrainstormingAI,
+    transformTextStyleAI,
+    fixGrammarAI
+} from "@/lib/gemini";
 
 export default function WritingLab() {
     const [essay, setEssay] = useState("");
@@ -57,65 +63,84 @@ export default function WritingLab() {
     };
 
     const analyzeEssay = async () => {
+        const apiKey = localStorage.getItem("gemini_api_key");
+        if (!apiKey) {
+            alert("No API Key found! Please click the Settings (gear icon) in the top menu to add your free Gemini API key.");
+            return;
+        }
+
         if (wordCount < 50) {
             alert("Please write at least 50 words for a meaningful analysis.");
             return;
         }
         setIsAnalyzing(true);
-        setTimeout(() => {
-            setFeedback({
-                scores: { overall: 7.5, taskResponse: 8.0, coherence: 7.0, lexical: 7.5, grammar: 7.5 },
-                feedback: {
-                    lexical: "Excellent use of academic terms. Consider more idiomatic collocations.",
-                    grammar: "Strong control of complex structures, though minor punctuation errors exist."
-                },
-                comparisons: [
-                    { original: essay.split('.')[0] || "Sample sentence.", improved: "The provided evidence strongly indicates that the implementation of such policies is not only beneficial but essential for long-term sustainability." },
-                ]
-            });
+        try {
+            const result = await analyzeEssayAI(apiKey, essay, prompt);
+            setFeedback(result);
+        } catch (error) {
+            alert("Analysis failed. Please check your API key and try again.");
+            console.error(error);
+        } finally {
             setIsAnalyzing(false);
-        }, 2000);
+        }
     };
 
-    const generateIdeas = () => {
+    const generateIdeas = async () => {
+        const apiKey = localStorage.getItem("gemini_api_key");
+        if (!apiKey) {
+            alert("API Key required for Brainstorming. Check Settings.");
+            return;
+        }
+
         setIsBrainstorming(true);
-        setTimeout(() => {
-            setBrainstormData({
-                agree: ["Increased work-life balance", "Exposure to diverse industries", "Faster salary growth"],
-                disagree: ["Loss of long-term benefits/pension", "Lack of job security", "Need for constant reskilling"],
-                structure: "Intro > Argument 1 (Flexibility) > Argument 2 (Stability) > Personal Opinion > Conclusion"
-            });
+        try {
+            const result = await generateBrainstormingAI(apiKey, prompt);
+            setBrainstormData(result);
+        } catch (error) {
+            alert("Brainstorming failed.");
+        } finally {
             setIsBrainstorming(false);
-        }, 1500);
+        }
     };
 
-    const transformStyle = (type: 'academic' | 'concise') => {
+    const transformStyle = async (type: 'academic' | 'concise') => {
+        const apiKey = localStorage.getItem("gemini_api_key");
+        if (!apiKey) {
+            alert("API Key required for Style Transformation. Check Settings.");
+            return;
+        }
+
         if (essay.length < 20) return;
         setIsTransforming(true);
-        setTimeout(() => {
-            const result = type === 'academic'
-                ? essay.replace(/I think/g, "It is arguably the case that").replace(/good/g, "efficacious")
-                : essay.slice(0, essay.length / 2) + "... [Concise version generated]";
+        try {
+            const result = await transformTextStyleAI(apiKey, essay, type);
             setEssay(result);
+        } catch (error) {
+            alert("Transformation failed.");
+        } finally {
             setIsTransforming(false);
-        }, 800);
+        }
     };
 
-    const repairGrammar = () => {
-        setIsRepairing(true);
-        setTimeout(() => {
-            let fixed = essay
-                .replace(/\bi is\b/gi, "I am")
-                .replace(/\bpeople is\b/gi, "people are")
-                .replace(/\bit have\b/gi, "it has")
-                .replace(/\bthe government should to\b/gi, "the government should");
+    const repairGrammar = async () => {
+        const apiKey = localStorage.getItem("gemini_api_key");
+        if (!apiKey) {
+            alert("API Key required for Grammar Repair. Check Settings.");
+            return;
+        }
 
+        setIsRepairing(true);
+        try {
+            const fixed = await fixGrammarAI(apiKey, essay);
             if (fixed !== essay) {
                 setRepairCount(prev => prev + 1);
                 setEssay(fixed);
             }
+        } catch (error) {
+            alert("Grammar repair failed.");
+        } finally {
             setIsRepairing(false);
-        }, 1200);
+        }
     };
 
     return (
